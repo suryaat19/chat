@@ -17,9 +17,14 @@ export async function login(formData: FormData) {
 
   const { error } = await supabase.auth.signInWithPassword(data)
 
+  
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
+
 
   revalidatePath('/chat', 'layout')
   redirect('/chat')
@@ -44,9 +49,12 @@ export async function signup(formData: FormData) {
 
   const { error } = await supabase.auth.signUp(data)
 
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
 
   revalidatePath('/', 'layout')
   redirect('/')
@@ -58,9 +66,11 @@ export async function logout(formData: FormData) {
 
   const { error } = await supabase.auth.signOut()
 
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
 
   revalidatePath('/', 'layout')
   redirect('/')
@@ -76,9 +86,12 @@ export async function sendResetLink(formData: FormData) {
 
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {  redirectTo: 'http://localhost:3000/authentication/update-password',})
 
+ 
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
 
   revalidatePath('/', 'layout')
   redirect('/')
@@ -96,9 +109,12 @@ export async function updatePassword(formData: FormData) {
 
   const { error } = await supabase.auth.updateUser(data)
 
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
 
   revalidatePath('/', 'layout')
   redirect('/')
