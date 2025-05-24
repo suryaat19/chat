@@ -34,7 +34,12 @@ export function ChatUI() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  return (
+  return (<div className="flex flex-col flex-grow">
+    <div className="flex h-16 mb-2 flex-grow bg-base-100 card card-border rounded-xl border-base-300">
+      <div className='card-body flex justify-center p-0 ml-5 text-xl font-bold'>
+          {"Alice Johnson"}
+      </div>
+    </div>
     <div className="flex flex-col justify-between flex-grow px-6 py-4 bg-base-200 h-full rounded-2xl">
       <div className="overflow-y-auto space-y-3 flex-1 pr-2">
         {messages.map((msg) => (
@@ -69,6 +74,7 @@ export function ChatUI() {
         </button>
       </form>
     </div>
+  </div>
   );
 }
 
@@ -119,22 +125,23 @@ const conversations = [
 
 export function ChatList() {
   return (
-    <div className="w-1/3 p-3 overflow-scroll">
+    <div className="w-1/3 pl-3 pr-2 overflow-scroll">
       <ul className="list bg-base-100 rounded-box gap-2">
-      {
-        conversations.map(({ full_name, last_message, timestamp }) => {
-          const message = last_message.substring(0, 60);
-          const time = new Date(timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
-          return (
-            <li key={full_name} className="list-row border border-base-300 flex flex-col gap-1">
-              <div className="text-xl font-bold">{full_name}</div>
-              <div className="text-xs flex justify-between items-center">
-                <span>{message.length < 60 ? message : message + "..."}</span>
-                <span className="ml-2 opacity-60">{time}</span>
-              </div>
-            </li>)
-        })
-      }
+        {
+          conversations.map(({ full_name, last_message, timestamp }) => {
+            const message = last_message.substring(0, 60);
+            const time = new Date(timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+            return (
+              <li key={full_name} className="list-row border border-base-300 flex flex-col gap-1">
+                <div className="text-xl font-bold">{full_name}</div>
+                <div className="text-xs flex justify-between items-center">
+                  <span>{message.length < 60 ? message : message + "..."}</span>
+                  <span className="ml-2 opacity-60">{time}</span>
+                </div>
+              </li>)
+          })
+        }
       </ul>
-    </div>);
+    </div>
+    );
 }
