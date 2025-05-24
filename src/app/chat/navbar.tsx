@@ -9,12 +9,12 @@ export function TopBar() {
                 </button>
             </div>
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">ClickVisor</a>
+                <a className="btn btn-ghost text-xl">Dummy Chat</a>
             </div>
             <div className="flex-none m-3">
                 <label className="swap swap-rotate">
                     {/* this hidden checkbox controls the state */}
-                    <input type="checkbox" className="theme-controller" value="dark" />
+                    <input type="checkbox" className="theme-controller" value="forest" />
 
                     {/* sun icon */}
                     <svg

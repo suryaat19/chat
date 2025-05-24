@@ -45,7 +45,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY
         [x] Registration and login system
         [ ] User profiles with customizable avatars
         [x] Session management
-        [ ] Password recovery mechanism
+        [x] Password recovery mechanism
     [ ] Basic Chat Interface
         [ ] Clean, responsive UI
         [ ] Message input and display

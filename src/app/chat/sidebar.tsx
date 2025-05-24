@@ -1,9 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Home, Person2Rounded, AdsClick, Campaign, AdminPanelSettings, Logout, Chat } from "@mui/icons-material";
+import { logout } from "../authentication/actions";
+import { createClient } from "../utils/supabase/client";
 
 const navItems = [
     { name: "Chats", route: "/chat", icon: <Chat /> },
@@ -11,6 +13,21 @@ const navItems = [
     { name: "Contacts", route: "/chat/contacts", icon: <AdsClick /> },
     { name: "Settings", route: "/chat/settings", icon: <Campaign /> }
 ];
+
+
+export function GetName() {
+    const [user, setUser] = useState("Loading...");
+    const client = createClient();
+    useEffect(() => {
+        client.auth.getUser().then((response) => {
+            const data = response.data.user;
+            setUser(data?.user_metadata?.full_name || "User");
+        });
+    }
+    , [client]);
+    return user;
+}
+
 
 export function SideBar() {
     const pathname = usePathname();
@@ -22,11 +39,11 @@ export function SideBar() {
                 <div className="card-body p-4 gap-2 items-center">
                     <div className="avatar mb-2">
                         <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                            <img src="/image.png" alt="User Avatar" />
+                            <img src="/globe.svg" alt="User Avatar" />
                         </div>
                     </div>
                     <h3 className="text-xl font-semibold">Welcome!</h3>
-                    <p className="text-base-content/70">Sameer Patel</p>
+                    <p className="text-base-content/70">{GetName()}</p>
                 </div>
             </div>
             <ul className="menu menu-lg w-full bg-base-100 card card-border border-base-300 gap-2">
@@ -63,6 +80,7 @@ export function SideBar() {
                         <h3 className="font-bold text-lg">Sign Out</h3>
                         <p className="py-4">Are you sure you want to sign out?</p>
                         <div className="modal-action">
+                            <form>
                             <button
                                 className="btn btn-outline"
                                 onClick={() => setShowModal(false)}
@@ -71,13 +89,11 @@ export function SideBar() {
                             </button>
                             <button
                                 className="btn btn-error"
-                                onClick={() => {
-                                    // Add your sign out logic here
-                                    setShowModal(false);
-                                }}
+                                formAction={logout}
                             >
                                 Yes, Sign Out
                             </button>
+                            </form>
                         </div>
                     </div>
                     <form method="dialog" className="modal-backdrop">
