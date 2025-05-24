@@ -35,7 +35,7 @@ export function ChatUI() {
   }, [messages]);
 
   return (<div className="flex flex-col flex-grow">
-    <div className="flex h-16 mb-2 flex-grow bg-base-100 card card-border rounded-xl border-base-300">
+    <div className="flex h-16 mb-2 mr-2 flex-grow bg-base-100 card card-border border-2 rounded-xl border-base-300">
       <div className='card-body flex justify-center p-0 ml-5 text-xl font-bold'>
           {"Alice Johnson"}
       </div>
@@ -43,8 +43,8 @@ export function ChatUI() {
     <div className="flex flex-col justify-between flex-grow px-6 py-4 bg-base-200 h-full rounded-2xl">
       <div className="overflow-y-auto space-y-3 flex-1 pr-2">
         {messages.map((msg) => (
-          <div key={msg.id} className="chat chat-end chat-border border-base-300">
-            <div className="chat-bubble">
+          <div key={msg.id} className="chat chat-end">
+            <div className="chat-bubble chat-bubble-neutral">
               <p>{msg.content}</p>
               <div className="text-xs opacity-70 mt-1">
                 {msg.timestamp} {msg.read && '✓'}
@@ -81,27 +81,27 @@ export function ChatUI() {
 
 const conversations = [
   {
-    full_name: "Alice Johnson",
+    full_name: "Alice Patel",
     last_message: "Hey! Are we still on for the meeting tomorrow at 10am?",
     timestamp: "2025-05-25T09:15:00"
   },
   {
-    full_name: "Bob Smith",
+    full_name: "Bob Thota",
     last_message: "I sent you the files. Let me know if you need anything else.",
     timestamp: "2025-05-25T08:50:00"
   },
   {
-    full_name: "Charlie Lee",
+    full_name: "Charlie Chaudhary",
     last_message: "Can you review my latest PR when you get a chance?",
     timestamp: "2025-05-24T17:30:00"
   },
   {
-    full_name: "Diana Patel",
+    full_name: "Diana Gupta",
     last_message: "Thanks for your help earlier! The bug is fixed now.",
     timestamp: "2025-05-24T16:10:00"
   },
   {
-    full_name: "Ethan Brown",
+    full_name: "Ethan Gugugaga",
     last_message: "I'll be offline this afternoon, ping me if urgent.",
     timestamp: "2025-05-24T14:45:00"
   },
@@ -132,7 +132,7 @@ export function ChatList() {
             const message = last_message.substring(0, 60);
             const time = new Date(timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
             return (
-              <li key={full_name} className="list-row border border-base-300 flex flex-col gap-1">
+              <li key={full_name} className="list-row border-2 border-base-300 flex flex-col gap-1">
                 <div className="text-xl font-bold">{full_name}</div>
                 <div className="text-xs flex justify-between items-center">
                   <span>{message.length < 60 ? message : message + "..."}</span>
