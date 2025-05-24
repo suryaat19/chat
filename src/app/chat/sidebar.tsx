@@ -8,12 +8,11 @@ import { logout } from "../authentication/actions";
 import { createClient } from "../utils/supabase/client";
 
 const navItems = [
-    { name: "Chats", route: "/chat", icon: <Chat /> },
+    { name: "Chats", route: "/chat/home", icon: <Chat /> },
     { name: "Profile", route: "/chat/profile", icon: <Person2Rounded /> },
     { name: "Contacts", route: "/chat/contacts", icon: <AdsClick /> },
     { name: "Settings", route: "/chat/settings", icon: <Campaign /> }
 ];
-
 
 export function GetName() {
     const [user, setUser] = useState("Loading...");
@@ -27,7 +26,6 @@ export function GetName() {
     , [client]);
     return user;
 }
-
 
 export function SideBar() {
     const pathname = usePathname();
