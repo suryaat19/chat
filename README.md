@@ -4,7 +4,7 @@
 
 Clone the Git Repository
 
-`URL goes here`
+`https://github.com/urffsamhunt/chat`
 
 then
 
