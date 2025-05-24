@@ -66,7 +66,7 @@ export async function signup(formData: FormData) {
   if (error) {
   const message = encodeURIComponent(error.message);
   redirect(`/error?message=${message}`);
-}
+  }
 
 
   // 3. Insert into usernames table
@@ -78,14 +78,15 @@ export async function signup(formData: FormData) {
   const last_active = new Date().toISOString();
   const { error: insertError } = await supabase
     .from('users')
-    .insert([{ user_id, username, last_active }]);
+    .insert({ user_id, username, last_active });
 
   if (insertError) {
+    console.log(insertError);
     redirect('/error?reason=username-insert-failed');
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/chat/home', 'layout')
+  redirect('/chat/home')
 }
 
 export async function logout(formData: FormData) {

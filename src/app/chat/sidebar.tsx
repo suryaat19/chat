@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Home, Person2Rounded, AdsClick, Campaign, AdminPanelSettings, Logout, Chat } from "@mui/icons-material";
 import { logout } from "../authentication/actions";
 import { createClient } from "../utils/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const navItems = [
     { name: "Chats", route: "/chat/home", icon: <Chat /> },
@@ -14,34 +15,39 @@ const navItems = [
     { name: "Settings", route: "/chat/settings", icon: <Campaign /> }
 ];
 
-export function GetName() {
-    const [user, setUser] = useState("Loading...");
+export function GetUser() {
+    const [user, setUser] = useState<any>({});
     const client = createClient();
     useEffect(() => {
         client.auth.getUser().then((response) => {
             const data = response.data.user;
-            setUser(data?.user_metadata?.full_name || "User");
+            setUser(data?.user_metadata || "User");
         });
     }
-    , [client]);
+        , [client]);
     return user;
 }
 
 export function SideBar() {
     const pathname = usePathname();
     const [showModal, setShowModal] = useState(false);
+    const details = GetUser();
 
     return (
         <aside className="h-screen w-64 flex flex-col z-50 p-4 gap-4 bg-base-100 border-r-2 border-base-300">
             <div className="card card-xs bg-base-100 card-border border-base-300 shadow">
                 <div className="card-body p-4 gap-2 items-center">
                     <div className="avatar mb-2">
-                        <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                            <img src="/globe.svg" alt="User Avatar" />
-                        </div>
+                        {details.avatar_url ? (
+                            <div className="flex justify-center mb-2">
+                                <img src={details.avatar_url} alt="Avatar" className="rounded-full w-8 h-8 object-cover border border-base-200 overflow-clip"/>
+                            </div>
+                        ):
+                        (<span>{details.full_name ? details.full_name[0] : ""}</span>)
+                        }
                     </div>
                     <h3 className="text-xl font-semibold">Welcome!</h3>
-                    <p className="text-base-content/70">{GetName()}</p>
+                    <p className="text-base-content/70 text-lg">{details.full_name ?? ""}</p>
                 </div>
             </div>
             <ul className="menu menu-lg w-full bg-base-100 card card-border border-base-300 gap-2">
@@ -51,9 +57,8 @@ export function SideBar() {
                         <li key={name}>
                             <Link
                                 href={route}
-                                className={`py-2 transition-colors duration-200 ${
-                                    selected ? "menu-active text-primary-content shadow" : ""
-                                }`}
+                                className={`py-2 transition-colors duration-200 ${selected ? "menu-active text-primary-content shadow" : ""
+                                    }`}
                             >
                                 <span className="text-xl">{icon}</span>
                                 <span className="font-medium">{name}</span>
@@ -78,19 +83,19 @@ export function SideBar() {
                         <h3 className="font-bold text-lg">Sign Out</h3>
                         <p className="py-4">Are you sure you want to sign out?</p>
                         <div className="modal-action">
-                            <form>
-                            <button
-                                className="btn btn-outline"
-                                onClick={() => setShowModal(false)}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="btn btn-error"
-                                formAction={logout}
-                            >
-                                Yes, Sign Out
-                            </button>
+                            <form className="space-x-2">
+                                <button
+                                    className="btn btn-outline"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="btn btn-error"
+                                    formAction={logout}
+                                >
+                                    Yes, Sign Out
+                                </button>
                             </form>
                         </div>
                     </div>

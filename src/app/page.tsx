@@ -9,7 +9,7 @@ export default function Home() {
           <h1 className="text-indigo-500 text-3xl font-bold px-4">Dummy Chat</h1>
           <div className="flex-grow"></div>
           <Link href="/authentication">
-            <button className=" btn btn-secondary focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active:bg-indigo-700">Get Started</button>
+            <button className="btn btn-secondary focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active:bg-indigo-700">Get Started</button>
           </Link>
         </div>
         <div className='flex mt-24'> 
