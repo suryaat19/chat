@@ -16,10 +16,15 @@ export async function login(formData: FormData) {
   }
 
   const { error } = await supabase.auth.signInWithPassword(data)
-  console.log(error)
+
+  
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
+
 
   revalidatePath('/chat', 'layout')
   redirect('/chat')
@@ -55,13 +60,20 @@ export async function signup(formData: FormData) {
     }
   }
 
-  const { data: signUpData, error } = await supabase.auth.signUp(data)
+  const { data: signUpData, error } = await supabase.auth.signUp(data);
 
-  if (error || !signUpData?.user) {
-    redirect('/error')
-  }
+
+  if (error) {
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
 
   // 3. Insert into usernames table
+  if (!signUpData || !signUpData.user) {
+    redirect('/error?reason=signup-failed');
+  }
+  
   const user_id = signUpData.user.id;
   const last_active = new Date().toISOString();
   const { error: insertError } = await supabase
@@ -82,9 +94,11 @@ export async function logout(formData: FormData) {
 
   const { error } = await supabase.auth.signOut()
 
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
 
   revalidatePath('/', 'layout')
   redirect('/')
@@ -100,9 +114,12 @@ export async function sendResetLink(formData: FormData) {
 
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {  redirectTo: 'http://localhost:3000/authentication/update-password',})
 
+ 
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
 
   revalidatePath('/', 'layout')
   redirect('/')
@@ -120,9 +137,12 @@ export async function updatePassword(formData: FormData) {
 
   const { error } = await supabase.auth.updateUser(data)
 
+
   if (error) {
-    redirect('/error')
-  }
+  const message = encodeURIComponent(error.message);
+  redirect(`/error?message=${message}`);
+}
+
 
   revalidatePath('/', 'layout')
   redirect('/')
