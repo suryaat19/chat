@@ -22,8 +22,8 @@ export default function UpdatePasswordPage() {
         })
     }, [])
     return (
-        <div className="h-screen w-screen flex justify-center items-center">
-            <div className="w-[25%] card card-border card-lg bg-base-100">
+        <div className="h-[calc(100vh-3rem)] w-screen flex justify-center items-center">
+            <div className="sm:w-[25%] w-[90%] card card-border card-lg bg-base-100">
                 <div className="card-body">
                     <h1 className="card-title">Update Password</h1>
                     <form className="flex flex-col gap-3">

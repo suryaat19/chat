@@ -4,8 +4,8 @@ export default function TopInfo() {
     //theme option is given
     return (
         <> 
-            <div className="navbar bg-base-100 shadow-sm w-[24rem]">
-                <div className="flex-1">
+            <div className="navbar bg-base-100 shadow-sm">
+                <div className="flex align-center justify-between w-full">
                     <div className="dropdown dropdown-start">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar avatar-online">
                             <div className="w-10 bg-red-400 rounded-full"><img alt="" src="" /></div>
@@ -44,17 +44,14 @@ export default function TopInfo() {
                                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-9A2.25 2.25 0 002.25 5.25v13.5A2.25 2.25 0 004.5 21h9a2.25 2.25 0 002.25-2.25V15l5.25 3V6l-5.25 3z"/>
                         </svg>
                     </label>
-                </div>
-                    
-                    <select defaultValue="Theme" className="select w-[8rem]">
+                    <select defaultValue="Theme" className="select w-[7rem]">
                         <option disabled={true}>Theme</option>
                         <option>Indigo</option>
                         <option>Gray</option>
                         <option>Amber</option>
                         <option>Blue</option>
                     </select>
-                
-                
+                </div>
             </div>
 
             

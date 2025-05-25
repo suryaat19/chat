@@ -3,8 +3,8 @@ import { sendResetLink } from "../actions";
 
 export default function ResetPage() {
     return (
-        <div className="h-screen w-screen flex justify-center items-center">
-            <div className="w-[25%] card card-border card-lg bg-base-100">
+        <div className="w-screen flex justify-center items-center h-[calc(100vh-3rem)]">
+            <div className="sm:w-[25%] w-[90%] card card-border card-lg bg-base-100">
                 <div className="card-body">
                     <h1 className="card-title">Reset Password</h1>
                     <form className="flex flex-col gap-3">
