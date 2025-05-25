@@ -1,9 +1,20 @@
 "use client"
 
-import { useEffect } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { ChatUI, ChatList } from "./chatUI";
 
+// Context to track the opened conversation
+export const ConversationContext = createContext<{
+    conversationId: string | null;
+    setConversationId: (id: string | null) => void;
+}>({
+    conversationId: null,
+    setConversationId: () => {},
+});
+
 export default function HomePage() {
+    const [conversationId, setConversationId] = useState<string | null>(null);
+
     useEffect(() => {
         async function fetchAndStoreContacts() {
             try {
@@ -20,11 +31,12 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="flex flex-grow">
-            <ChatList />
-            <ChatUI />
-        </div>
-
+        <ConversationContext.Provider value={{ conversationId, setConversationId }}>
+            <div className="flex flex-grow">
+                <ChatList />
+                <ChatUI />
+            </div>
+        </ConversationContext.Provider>
     );
 }
 

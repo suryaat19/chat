@@ -37,7 +37,7 @@ export default function ChatSettingsPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-base-200">
+        <div className="flex-grow flex items-center justify-center bg-base-200">
             <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
                 <h2 className="text-2xl font-semibold mb-4">Chat Settings</h2>
                 {loading ? (

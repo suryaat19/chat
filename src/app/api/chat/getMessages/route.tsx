@@ -25,6 +25,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase.rpc("get_messages_for_conversation", {
     conversation_id: conversationId,
     time_offset: timeOffset,
+    auth_user_id: user.id
   });
 
   if (error) {

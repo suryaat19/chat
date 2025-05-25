@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { createClient } from '@/app/utils/supabase/client';
+import { ConversationContext } from './page';
 
 
 interface Message {
@@ -12,12 +13,39 @@ interface Message {
   read: boolean;
 }
 
+function ChatTopBar({ conversationId, conversationData }: { conversationId: string | null, conversationData: Record<string, any> }) {
+  if (!conversationId || !conversationData[conversationId]) {
+    return (
+      <span className="text-xl font-bold">Select a conversation</span>
+    );
+  }
+  // Prefer nickname from contacts if present
+  let displayName = conversationData[conversationId].username;
+  let nickname = '';
+  try {
+    const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
+    if (contactsRaw) {
+      const contacts = JSON.parse(contactsRaw);
+      const match = contacts.find((c: any) => c.name === conversationData[conversationId].username || c.full_name === conversationData[conversationId].full_name);
+      if (match && match.nickname && match.nickname.trim() !== '') {
+        nickname = match.nickname;
+      }
+    }
+  } catch {}
+  return (
+    <>
+      <span className="text-xl font-bold">{nickname || displayName}</span>
+      <span className="text-xs font-light opacity-70">{conversationData[conversationId].username}</span>
+    </>
+  );
+}
 
 export function ChatUI() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [readReceiptsEnabled, setReadReceiptsEnabled] = useState(true); // Default to true
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const { conversationId } = useContext(ConversationContext);
 
   useEffect(() => {
     const fetchUserSetting = async () => {
@@ -50,12 +78,27 @@ export function ChatUI() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  let conversationDataRaw: string = typeof window !== 'undefined' ? localStorage.getItem('conversations') ?? "" : "";
+  let conversationData: Record<string, any> = {};
+  if (conversationDataRaw) {
+    try {
+      const parsed = JSON.parse(conversationDataRaw);
+      if (Array.isArray(parsed)) {
+        parsed.forEach((conv: any) => {
+          if (conv.conversation_id) {
+            conversationData[conv.conversation_id] = conv;
+          }
+        });
+      }
+    } catch {}
+  }
+  console.log(conversationData);
 
 
   return (<div className="flex flex-col flex-grow">
     <div className="flex h-16 mb-2 mr-2 flex-grow bg-base-100 card card-border border-2 rounded-xl border-base-300">
-      <div className='card-body flex justify-center p-0 ml-5 text-xl font-bold'>
-          {"Alice Johnson"}
+      <div className='card-body flex flex-col justify-center p-0 ml-5 gap-0'>
+        <ChatTopBar conversationId={conversationId} conversationData={conversationData} />
       </div>
     </div>
     <div className="flex flex-col justify-between flex-grow px-6 py-4 bg-base-200 h-full rounded-2xl">
@@ -65,10 +108,10 @@ export function ChatUI() {
             <div className="chat-bubble chat-bubble-neutral">
               <p>{msg.content}</p>
               <div className="text-xs opacity-70 mt-1">
-               {msg.timestamp}
-               <span className={`ml-1 ${readReceiptsEnabled ? 'text-green-500 font-bold' : 'text-gray-400'}`}>
-                    ✓
-               </span>
+                {msg.timestamp}
+                <span className={`ml-1 ${readReceiptsEnabled ? 'text-green-500 font-bold' : 'text-gray-400'}`}>
+                  ✓
+                </span>
               </div>
             </div>
           </div>
@@ -103,6 +146,7 @@ export function ChatList() {
   const [conversations, setConversations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { conversationId, setConversationId } = useContext(ConversationContext);
 
   useEffect(() => {
     async function fetchConversations() {
@@ -118,6 +162,7 @@ export function ChatList() {
           console.log(data);
           if (Array.isArray(data)) {
             setConversations(data);
+            localStorage.setItem('conversations', JSON.stringify(data));
           } else {
             setConversations([]);
           }
@@ -152,11 +197,16 @@ export function ChatList() {
                   displayName = match.nickname && match.nickname.trim() !== '' ? match.nickname : (match.full_name || match.name || full_name);
                 }
               }
-            } catch {}
+            } catch { }
             const message = last_message?.substring(0, 60) || "";
             const time = timestamp ? new Date(timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : "";
+            const isActive = conversationId === conversation_id;
             return (
-              <li key={conversation_id || full_name + idx} className="list-row border-2 border-base-300 flex flex-col gap-1">
+              <li
+                key={conversation_id || full_name + idx}
+                className={`list-row border-2 border-base-300 flex flex-col gap-1 cursor-pointer transition-colors ${isActive ? 'bg-base-300' : 'hover:bg-base-200'}`}
+                onClick={() => setConversationId(conversation_id)}
+              >
                 <div className="text-xl font-bold">{displayName}</div>
                 <div className="text-xs flex justify-between items-center">
                   <span>{message.length < 60 ? message : message + "..."}</span>
