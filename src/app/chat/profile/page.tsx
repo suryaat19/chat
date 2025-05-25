@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
@@ -91,7 +89,7 @@ export default function ProfilePage() {
                 }
                 const user = await supabase.auth.getUser();
                 const user_id = user.data.user?.id;
-                const fileExt = avatarFile.name.split('.').pop();
+                const fileExt = '';
                 const fileName = `${username}.${fileExt}`;
                 const filePath = `${user_id}/${fileName}`;
 
@@ -129,6 +127,10 @@ export default function ProfilePage() {
             setError("Failed to update profile");
         } else {
             setSuccess("Profile updated successfully! \n Refresh to apply the changes");
+            // Trigger media cache refresh by re-assigning the avatarUrl with a cache-busting query param
+            if (newAvatarUrl) {
+                setAvatarUrl(newAvatarUrl + `?t=${Date.now()}`);
+            }
         }
         setLoading(false);
     };

@@ -108,8 +108,9 @@ export default function Contacts() {
           setError("Failed to add contact.");
         } else {
           const newContact = await res.json();
-          setContacts([...contacts, newContact]);
+          console.log(newContact);
           setShowModal(false);
+          window.location.reload();
         }
       }
     } catch (e) {
