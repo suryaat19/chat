@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -36,11 +35,11 @@ export default function Home() {
         </div>
       <p className="text-2xl mx-16 mt-8">Dummy Chat is a simple chat application that allows you to connect with friends and family.</p>
       <div className="flex flex-col sm:flex-row mt-8 gap-3 sm:gap-0">
-        <span className="ml-16 dark:bg-gray-900 badge">User Authentication</span>
-        <span className="ml-16 dark:bg-gray-900 badge">Real time Messaging</span>
-        <span className="ml-16 dark:bg-gray-900 badge">Group and Direct Chats</span>
-        <span className="ml-16 dark:bg-gray-900 badge">Rich Media Sharing</span>
-        <span className="ml-16 dark:bg-gray-900 badge">Clean Responsive Interface</span>
+        <span className="ml-16 dark:bg-gray-900 dark:text-white badge">User Authentication</span>
+        <span className="ml-16 dark:bg-gray-900 dark:text-white badge">Real time Messaging</span>
+        <span className="ml-16 dark:bg-gray-900 dark:text-white badge">Group and Direct Chats</span>
+        <span className="ml-16 dark:bg-gray-900 dark:text-white badge">Rich Media Sharing</span>
+        <span className="ml-16 dark:bg-gray-900 dark:text-white badge">Clean Responsive Interface</span>
       </div>
       
     </div>
