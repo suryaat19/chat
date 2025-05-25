@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createClient } from '@/app/utils/supabase/client';
+
 
 interface Message {
   id: number;
@@ -10,10 +12,24 @@ interface Message {
   read: boolean;
 }
 
+
 export function ChatUI() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [readReceiptsEnabled, setReadReceiptsEnabled] = useState(true); // Default to true
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchUserSetting = async () => {
+      const supabase = createClient();
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      if (user && user.user_metadata) {
+        setReadReceiptsEnabled(!!user.user_metadata.read_receipts_enabled);
+      }
+    };
+    fetchUserSetting();
+  }, []);
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -23,7 +39,7 @@ export function ChatUI() {
       sender: 'You',
       content: input,
       timestamp: new Date().toLocaleTimeString(),
-      read: true
+      read: readReceiptsEnabled // apply setting here
     };
 
     setMessages([...messages, newMessage]);
@@ -33,6 +49,8 @@ export function ChatUI() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+
 
   return (<div className="flex flex-col flex-grow">
     <div className="flex h-16 mb-2 mr-2 flex-grow bg-base-100 card card-border border-2 rounded-xl border-base-300">
@@ -47,7 +65,10 @@ export function ChatUI() {
             <div className="chat-bubble chat-bubble-neutral">
               <p>{msg.content}</p>
               <div className="text-xs opacity-70 mt-1">
-                {msg.timestamp} {msg.read && '✓'}
+               {msg.timestamp}
+               <span className={`ml-1 ${readReceiptsEnabled ? 'text-green-500 font-bold' : 'text-gray-400'}`}>
+                    ✓
+               </span>
               </div>
             </div>
           </div>
