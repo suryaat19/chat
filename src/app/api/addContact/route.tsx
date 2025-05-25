@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/app/utils/supabase/server'
 
 export async function POST(request: Request) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -33,13 +33,13 @@ export async function POST(request: Request) {
   }
 
   // Insert into contacts
-  const { error: insertError } = await supabase.from('contacts').insert([
+  const { error: insertError } = await supabase.from('contacts').insert(
     {
       user_id: user.id,
       contact_user_id: contactUser.user_id,
       nickname
     }
-  ])
+  );
 
   if (insertError) {
     return NextResponse.json({ code: insertError.message }, { status: 500 })
