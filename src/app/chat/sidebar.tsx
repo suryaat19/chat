@@ -40,7 +40,14 @@ export function SideBar() {
                     <div className="avatar mb-2">
                         {details.avatar_url ? (
                             <div className="flex justify-center mb-2">
-                                <img src={details.avatar_url} alt="Avatar" className="rounded-full w-8 h-8 object-cover border border-base-200 overflow-clip"/>
+                                <div className="w-12 h-12 rounded-full overflow-hidden border border-base-200">
+                                   <img
+                                            src={details.avatar_url}
+                                               alt="Avatar"
+                                               className="w-full h-full object-cover"
+                                                />
+                                        </div>
+
                             </div>
                         ):
                         (<span>{details.full_name ? details.full_name[0] : ""}</span>)

@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createClient } from '@/app/utils/supabase/client';
+
 
 interface Message {
   id: number;
@@ -10,10 +12,24 @@ interface Message {
   read: boolean;
 }
 
+
 export function ChatUI() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [readReceiptsEnabled, setReadReceiptsEnabled] = useState(true); // Default to true
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchUserSetting = async () => {
+      const supabase = createClient();
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      if (user && user.user_metadata) {
+        setReadReceiptsEnabled(!!user.user_metadata.read_receipts_enabled);
+      }
+    };
+    fetchUserSetting();
+  }, []);
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -23,7 +39,7 @@ export function ChatUI() {
       sender: 'You',
       content: input,
       timestamp: new Date().toLocaleTimeString(),
-      read: true
+      read: readReceiptsEnabled // apply setting here
     };
 
     setMessages([...messages, newMessage]);
@@ -33,6 +49,8 @@ export function ChatUI() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+
 
   return (<div className="flex flex-col flex-grow">
     <div className="flex h-16 mb-2 mr-2 flex-grow bg-base-100 card card-border border-2 rounded-xl border-base-300">
@@ -47,7 +65,10 @@ export function ChatUI() {
             <div className="chat-bubble chat-bubble-neutral">
               <p>{msg.content}</p>
               <div className="text-xs opacity-70 mt-1">
-                {msg.timestamp} {msg.read && '✓'}
+               {msg.timestamp}
+               <span className={`ml-1 ${readReceiptsEnabled ? 'text-green-500 font-bold' : 'text-gray-400'}`}>
+                    ✓
+               </span>
               </div>
             </div>
           </div>
@@ -78,70 +99,74 @@ export function ChatUI() {
   );
 }
 
-
-const conversations = [
-  {
-    full_name: "Alice Patel",
-    last_message: "Hey! Are we still on for the meeting tomorrow at 10am?",
-    timestamp: "2025-05-25T09:15:00"
-  },
-  {
-    full_name: "Bob Thota",
-    last_message: "I sent you the files. Let me know if you need anything else.",
-    timestamp: "2025-05-25T08:50:00"
-  },
-  {
-    full_name: "Charlie Chaudhary",
-    last_message: "Can you review my latest PR when you get a chance?",
-    timestamp: "2025-05-24T17:30:00"
-  },
-  {
-    full_name: "Diana Gupta",
-    last_message: "Thanks for your help earlier! The bug is fixed now.",
-    timestamp: "2025-05-24T16:10:00"
-  },
-  {
-    full_name: "Ethan Gugugaga",
-    last_message: "I'll be offline this afternoon, ping me if urgent.",
-    timestamp: "2025-05-24T14:45:00"
-  },
-  {
-    full_name: "Fiona Green",
-    last_message: "Lunch was great! Let's do it again soon.",
-    timestamp: "2025-05-24T13:20:00"
-  },
-  {
-    full_name: "George King",
-    last_message: "Reminder: Standup is at 9:30am sharp.",
-    timestamp: "2025-05-24T09:00:00"
-  },
-  {
-    full_name: "Hannah White",
-    last_message: "Can you share the project timeline doc?",
-    timestamp: "2025-05-23T18:05:00"
-  }
-]
-
-
 export function ChatList() {
+  const [conversations, setConversations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function fetchConversations() {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch("/api/chat/getConversations");
+        if (!res.ok) {
+          setError("Failed to load conversations");
+          setConversations([]);
+        } else {
+          const data = await res.json();
+          console.log(data);
+          if (Array.isArray(data)) {
+            setConversations(data);
+          } else {
+            setConversations([]);
+          }
+        }
+      } catch (e) {
+        setError("Failed to load conversations");
+        setConversations([]);
+      }
+      setLoading(false);
+    }
+    fetchConversations();
+  }, []);
+
   return (
     <div className="w-1/3 pl-3 pr-2 overflow-scroll">
       <ul className="list bg-base-100 rounded-box gap-2">
-        {
-          conversations.map(({ full_name, last_message, timestamp }) => {
-            const message = last_message.substring(0, 60);
-            const time = new Date(timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+        {loading ? (
+          <li className="text-center py-4">Loading...</li>
+        ) : error ? (
+          <li className="text-error text-center py-4">{error}</li>
+        ) : (
+          conversations.map(({ full_name, last_message, timestamp, conversation_id }, idx) => {
+            // Prefer nickname from localStorage contacts if present
+            let displayName = full_name;
+            try {
+              const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
+              if (contactsRaw) {
+                const contacts = JSON.parse(contactsRaw);
+                // Try to match by name or full_name
+                const match = contacts.find((c: any) => c.name === full_name || c.full_name === full_name);
+                if (match) {
+                  displayName = match.nickname && match.nickname.trim() !== '' ? match.nickname : (match.full_name || match.name || full_name);
+                }
+              }
+            } catch {}
+            const message = last_message?.substring(0, 60) || "";
+            const time = timestamp ? new Date(timestamp).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : "";
             return (
-              <li key={full_name} className="list-row border-2 border-base-300 flex flex-col gap-1">
-                <div className="text-xl font-bold">{full_name}</div>
+              <li key={conversation_id || full_name + idx} className="list-row border-2 border-base-300 flex flex-col gap-1">
+                <div className="text-xl font-bold">{displayName}</div>
                 <div className="text-xs flex justify-between items-center">
                   <span>{message.length < 60 ? message : message + "..."}</span>
                   <span className="ml-2 opacity-60">{time}</span>
                 </div>
-              </li>)
+              </li>
+            );
           })
-        }
+        )}
       </ul>
     </div>
-    );
+  );
 }

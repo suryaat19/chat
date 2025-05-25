@@ -1,6 +1,7 @@
-/*import { NextResponse } from 'next/server'
-import { createClient } from '@/app/utils/supabase/server'
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/app/utils/supabase/server";
 
+<<<<<<< HEAD
 export async function GET() {
   const supabase = createClient()
 
@@ -107,65 +108,35 @@ export async function GET() {
 import { createClient } from '@/app/utils/supabase/server';
 
 export async function GET() {
+=======
+export async function GET(request: Request) {
+>>>>>>> upstream/main
   const supabase = await createClient();
-
+  // Get the authenticated user
   const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
-
-  if (sessionError || !session?.user) {
-    return NextResponse.json({ code: 'Unauthorized' }, { status: 401 });
+    data: { user },
+    error: authError
+  } = await supabase.auth.getUser();
+  if (authError || !user) {
+    return NextResponse.json({ code: 403 }, { status: 403 });
   }
 
-  const user = session.user;
-
-  const { data: contacts, error } = await supabase
-    .from('contacts')
-    .select(`
-      contact_user_id,
-      nickname,
-      users:contact_user_id (
-        user_id,
-        username
-      )
-    `)
-    .eq('user_id', user.id);
+  // Fetch contacts for the user
+  const { data, error } = await supabase
+    .from("contacts")
+    .select("contact_user_id, nickname, users:contact_user_id(username)")
+    .eq("user_id", user.id);
 
   if (error) {
-    return NextResponse.json({ code: error.message }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const result = contacts.map((contact: any) => ({
-    name: contact.users?.username ?? 'Unknown',
-    nickname: contact.nickname,
-    user_id: contact.contact_user_id,
+  // Map to expected output: { name, full_name, nickname, user_id }
+  const contacts = (data || []).map((c: any) => ({
+    name: c.users?.username || "",
+    nickname: c.nickname || "",
+    user_id: c.contact_user_id
   }));
 
-  return NextResponse.json(result);
+  return NextResponse.json(contacts);
 }
-
-*/
-/*export async function GET(request: Request) {
-    return Response.json([{
-        name: "Test User 1",
-        nickname: "",
-        user_id: "wfowur832urfh98"
-    },
-    {
-        name: "Test User 1",
-        nickname: "",
-        user_id: "wfowsdurfsds832urfh982urifoheoha"
-    },
-    {
-        name: "Test User 1",
-        nickname: "",
-        user_id: "wfowsdur832urfh982urifoheoha"
-    },
-    {
-        name: "Test User 1",
-        nickname: "",
-        user_id: "wfowur8s32urdsdfh982urifoheoha"
-    }]);
-}
-*/

@@ -13,8 +13,8 @@ export default async function LoginPage() {
     redirect("" + h.get('x-forwarded-proto') + "://" + h.get('host') + "/chat/home")
   }
   return (
-    <div className="h-screen w-screen flex justify-center items-center space-x-4">
-      <div className="w-[25%] card card-border card-lg bg-base-100">
+    <div className="h-screen w-screen flex flex-col gap-3 sm:gap-0 sm:flex-row justify-center items-center space-x-4">
+      <div className="sm:w-[25%] w-[90%] mx-[5%] card card-border card-lg bg-base-100">
         <div className="card-body">
           <h1 className="card-title">Login</h1>
           <form className="flex flex-col gap-3">
@@ -29,7 +29,7 @@ export default async function LoginPage() {
         </div>
 
       </div>
-      <div className="w-[25%] card card-border card-lg bg-base-100">
+      <div className="sm:w-[25%] w-[90%] card card-border card-lg bg-base-100">
         <div className="card-body">
           <h1 className="card-title">Sign Up</h1>
           <form className="flex flex-col gap-3">

@@ -17,25 +17,30 @@ export default function Contacts() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchContacts() {
-      setLoading(true);
-      setError("");
-      try {
-        const res = await fetch("/api/getContacts");
-        if (res.status === 403) {
-          setError("You are not authorized to view contacts.");
-          setContacts([]);
-        } else {
-          const data = await res.json();
+  async function fetchContacts() {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/getContacts");
+      if (res.status === 403) {
+        setError("You are not authorized to view contacts.");
+        setContacts([]);
+      } else {
+        const data = await res.json();
+        if (Array.isArray(data)) {
           setContacts(data);
+        } else {
+          setContacts([]);
         }
-      } catch (e) {
-        setError("Failed to fetch contacts.");
       }
-      setLoading(false);
+    } catch (e) {
+      setError("Failed to fetch contacts.");
+      setContacts([]);
     }
-    fetchContacts();
-  }, []);
+    setLoading(false);
+  }
+  fetchContacts();
+}, []);
 
   const openAddModal = () => {
     setEditContact(null);
