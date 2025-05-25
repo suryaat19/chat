@@ -34,10 +34,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 ## Automatic Setup along with Supabase and Vercel (TODO)
 
-## Features (Current)
-- User Registration and Login
-- Session Management
-### TODO
+
+### Feature Roadmap
     [x] Project Setup
         [x] Initialize repository with proper structure
         [x] Set up development environment
@@ -52,13 +50,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY
         [x] Basic conversation threading
         [x] Read receipts along with timestamp
     [ ] Real-time Communication
-        [ ] Implement websocket connections
-        [ ] Message delivery status indicators
-        [ ] Typing indicators
+        [x] Implement websocket connections
+        [x] Message delivery status indicators
+        [x] Typing indicators
         [ ] Online/offline status
     [ ] Advanced Chat Features
         [ ] Group chat functionality
-        [ ] Direct messaging between users
+        [x] Direct messaging between users
         [ ] Message reactions (likes, emoji responses)
     [ ] Media Support
         [ ] Image sharing and previews

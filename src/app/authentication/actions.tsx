@@ -44,6 +44,7 @@ export async function signup(formData: FormData) {
 
   if (existingUser) {
     // Username already exists
+    
     redirect('/error?reason=username-taken');
   }
 

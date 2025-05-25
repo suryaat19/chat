@@ -36,6 +36,7 @@ create table public.messages (
   message_text text not null,
   sent_at timestamp with time zone null default CURRENT_TIMESTAMP,
   read_at timestamp with time zone null,
+  likes smallint not null default '0'::smallint,
   constraint messages_pkey primary key (message_id),
   constraint messages_conversation_id_fkey foreign KEY (conversation_id) references conversations (conversation_id) on delete CASCADE,
   constraint messages_sender_id_fkey foreign KEY (sender_id) references users (user_id) on delete CASCADE
@@ -44,7 +45,6 @@ create table public.messages (
 create index IF not exists idx_messages_conversation_sent_at on public.messages using btree (conversation_id, sent_at desc) TABLESPACE pg_default;
 
 create index IF not exists idx_messages_sender_id on public.messages using btree (sender_id) TABLESPACE pg_default;
-
 
 
 create table public.users (
