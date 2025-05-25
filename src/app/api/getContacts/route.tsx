@@ -1,7 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+/*import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/app/utils/supabase/server";
-
-<<<<<<< HEAD
 export async function GET() {
   const supabase = createClient()
 
@@ -108,9 +106,9 @@ export async function GET() {
 import { createClient } from '@/app/utils/supabase/server';
 
 export async function GET() {
-=======
+
 export async function GET(request: Request) {
->>>>>>> upstream/main
+
   const supabase = await createClient();
   // Get the authenticated user
   const {
@@ -140,3 +138,4 @@ export async function GET(request: Request) {
 
   return NextResponse.json(contacts);
 }
+*/
