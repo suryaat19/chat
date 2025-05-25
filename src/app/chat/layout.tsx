@@ -15,7 +15,6 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
             <TopBar />
             {children}
             </div>
-            
         </div>
     </>;
 }
