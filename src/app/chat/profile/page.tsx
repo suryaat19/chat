@@ -84,6 +84,11 @@ export default function ProfilePage() {
         if (avatarFile && croppedAreaPixels && cropImageUrl) {
             try {
                 const croppedBlob = await getCroppedImg(cropImageUrl, croppedAreaPixels);
+                if (!croppedBlob) {
+                    setError("Failed to crop avatar image.");
+                    setLoading(false);
+                    return;
+                }
                 const user = await supabase.auth.getUser();
                 const user_id = user.data.user?.id;
                 const fileExt = avatarFile.name.split('.').pop();
