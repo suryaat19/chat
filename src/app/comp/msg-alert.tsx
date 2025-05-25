@@ -1,4 +1,4 @@
-export default function ChatBubble() {
+export default function Alerts() {
     return(
         <div>
             <div role="alert" className="alert alert-vertical sm:alert-horizontal">
