@@ -10,6 +10,7 @@ export default function Home() {
           <div className="flex-grow"></div>
           <Link href="/authentication" className="tooltip tooltip-bottom" data-tip="Click to Login or Register">
             <button className=" btn btn-secondary focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active:bg-indigo-700">Get Started</button>
+
           </Link>
           <label className="swap swap-rotate">
             <input type="checkbox" className="theme-controller" value="forest" />

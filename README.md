@@ -41,16 +41,16 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY
     [x] Project Setup
         [x] Initialize repository with proper structure
         [x] Set up development environment
-    [ ] User Authentication
+    [x] User Authentication
         [x] Registration and login system
-        [ ] User profiles with customizable avatars
+        [x] User profiles with customizable avatars
         [x] Session management
         [x] Password recovery mechanism
-    [ ] Basic Chat Interface
-        [ ] Clean, responsive UI
-        [ ] Message input and display
-        [ ] Basic conversation threading
-        [ ] Read receipts along with timestamp
+    [x] Basic Chat Interface
+        [x] Clean, responsive UI
+        [x] Message input and display
+        [x] Basic conversation threading
+        [x] Read receipts along with timestamp
     [ ] Real-time Communication
         [ ] Implement websocket connections
         [ ] Message delivery status indicators

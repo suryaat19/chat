@@ -10,7 +10,7 @@ export default async function LoginPage() {
   const client = await createClient();
   const { data, error } = await client.auth.getUser();
   if (!error) { //User is logged in
-    redirect("" + h.get('x-forwarded-proto') + "://" + h.get('host') + "/chat")
+    redirect("" + h.get('x-forwarded-proto') + "://" + h.get('host') + "/chat/home")
   }
   return (
       <div className="flex flex-col w-screen h-[calc(100vh-3rem)] gap-3 sm:gap-0 sm:flex-row justify-center items-center space-x-4">

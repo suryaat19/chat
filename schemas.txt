@@ -1,0 +1,61 @@
+create table public.contacts (
+  user_id uuid not null,
+  contact_user_id uuid not null,
+  nickname character varying null default '25'::character varying,
+  constraint contacts_pkey primary key (user_id, contact_user_id),
+  constraint contacts_contact_user_id_fkey1 foreign KEY (contact_user_id) references users (user_id) on update CASCADE on delete CASCADE,
+  constraint contacts_user_id_fkey1 foreign KEY (user_id) references users (user_id) on update CASCADE on delete CASCADE
+) TABLESPACE pg_default;
+
+
+
+create table public.conversation_participants (
+  conversation_id uuid not null,
+  user_id uuid not null,
+  joined_at timestamp with time zone null default CURRENT_TIMESTAMP,
+  constraint conversation_participants_pkey primary key (conversation_id, user_id),
+  constraint conversation_participants_conversation_id_fkey foreign KEY (conversation_id) references conversations (conversation_id) on delete CASCADE,
+  constraint conversation_participants_user_id_fkey foreign KEY (user_id) references users (user_id) on delete CASCADE
+) TABLESPACE pg_default;
+
+
+create table public.conversations (
+  conversation_id uuid not null default gen_random_uuid (),
+  name character varying(100) null,
+  is_group_chat boolean not null default false,
+  created_at timestamp with time zone null default CURRENT_TIMESTAMP,
+  constraint conversations_pkey primary key (conversation_id)
+) TABLESPACE pg_default;
+
+
+
+create table public.messages (
+  message_id uuid not null default gen_random_uuid (),
+  conversation_id uuid not null,
+  sender_id uuid not null,
+  message_text text not null,
+  sent_at timestamp with time zone null default CURRENT_TIMESTAMP,
+  read_at timestamp with time zone null,
+  constraint messages_pkey primary key (message_id),
+  constraint messages_conversation_id_fkey foreign KEY (conversation_id) references conversations (conversation_id) on delete CASCADE,
+  constraint messages_sender_id_fkey foreign KEY (sender_id) references users (user_id) on delete CASCADE
+) TABLESPACE pg_default;
+
+create index IF not exists idx_messages_conversation_sent_at on public.messages using btree (conversation_id, sent_at desc) TABLESPACE pg_default;
+
+create index IF not exists idx_messages_sender_id on public.messages using btree (sender_id) TABLESPACE pg_default;
+
+
+
+create table public.users (
+  user_id uuid not null,
+  username character varying not null,
+  last_active timestamp with time zone null default (now() AT TIME ZONE 'utc'::text),
+  full_name text null,
+  constraint users_pkey primary key (user_id),
+  constraint users_username_key unique (username),
+  constraint users_user_id_fkey foreign KEY (user_id) references auth.users (id) on update CASCADE on delete CASCADE,
+  constraint users_full_name_check check ((length(full_name) < 50))
+) TABLESPACE pg_default;
+
+create index IF not exists idx_users_username on public.users using btree (username) TABLESPACE pg_default;
