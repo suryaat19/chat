@@ -132,7 +132,7 @@ export default function Contacts() {
           ) : (
             <ul className="rounded-box divide-y divide-base-200">
               {contacts.map(contact => (
-                <li key={contact.user_id} className="flex justify-between items-center py-3 px-2 hover:bg-base-300 transition-colors">
+                <li key={contact.name} className="flex justify-between items-center py-3 px-2 hover:bg-base-300 transition-colors">
                   <div>
                     <div className="font-semibold text-base-content">{contact.name}</div>
                     <div className="text-xs opacity-70">{contact.nickname}</div>
