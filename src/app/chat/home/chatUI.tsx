@@ -139,15 +139,15 @@ export function ChatList() {
         ) : error ? (
           <li className="text-error text-center py-4">{error}</li>
         ) : (
-          conversations.map(({ full_name, last_message, timestamp, conversation_id }, idx) => {
+          conversations.map(({ full_name, last_message, timestamp, conversation_id, username }, idx) => {
             // Prefer nickname from localStorage contacts if present
-            let displayName = full_name;
+            let displayName = username;
             try {
               const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
               if (contactsRaw) {
                 const contacts = JSON.parse(contactsRaw);
                 // Try to match by name or full_name
-                const match = contacts.find((c: any) => c.name === full_name || c.full_name === full_name);
+                const match = contacts.find((c: any) => c.name === username || c.full_name === full_name);
                 if (match) {
                   displayName = match.nickname && match.nickname.trim() !== '' ? match.nickname : (match.full_name || match.name || full_name);
                 }
