@@ -68,7 +68,7 @@ Day 3: Polish & Other Optional Features
 
     [ ] Search & Organization
         [ ] Message search functionality
-        [ ] Chat history
+        [x] Chat history
         [ ] Message threading/replies
         [ ] Pin important messages
     [ ] Notifications
@@ -76,9 +76,9 @@ Day 3: Polish & Other Optional Features
         [ ] Email notifications (optional)
         [ ] Notification preferences
         [ ] Mention functionality (@username)
-    [ ] Final Touches
-        [ ] Theme customization (light/dark mode)
-        [ ] Performance optimization
+    [x] Final Touches
+        [x] Theme customization (light/dark mode)
+        [x] Performance optimization
 
 ## Code Structure
 
