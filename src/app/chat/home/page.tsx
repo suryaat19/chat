@@ -2,15 +2,9 @@
 
 import { useEffect, useState, createContext, useContext } from 'react';
 import { ChatUI, ChatList } from "./chatUI";
+import {ConversationContext} from '../context';
 
-// Context to track the opened conversation
-export const ConversationContext = createContext<{
-    conversationId: string | null;
-    setConversationId: (id: string | null) => void;
-}>({
-    conversationId: null,
-    setConversationId: () => {},
-});
+
 
 export default function HomePage() {
     const [conversationId, setConversationId] = useState<string | null>(null);

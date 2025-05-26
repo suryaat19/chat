@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useRef, useState } from 'react';
 import { createClient } from '@/app/utils/supabase/client';
-import { ConversationContext } from './page';
+import { ConversationContext } from '../context';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { deleteMessage, editMessage, newDirectConversation, sendMessage, handleLikeToggle, newGroupConversation } from './chatActions';
 
