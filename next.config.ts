@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media-cldnry.s-nbcnews.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

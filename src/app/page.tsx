@@ -31,7 +31,10 @@ export default function Home() {
           <div className="chat chat-start ml-2 ">
             <div className="chat-image avatar">
                 <div className="w-10 bg-blue-950 text-center text-3xl text-white rounded-full">
-                  <Image alt="Image" src="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2022-03/220312-hailey-bieber-mjf-1403-2c7ede.jpg" />
+                  <Image alt="Image" src="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2022-03/220312-hailey-bieber-mjf-1403-2c7ede.jpg"
+                  width={40}
+                  height={40}
+                  />
                 </div>
             </div>
             <div className="chat-header text-xl">Hailey<time className="text-xl opacity-50">22:47</time></div>
