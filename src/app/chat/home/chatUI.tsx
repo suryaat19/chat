@@ -6,7 +6,6 @@ import { ConversationContext } from '../context';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { deleteMessage, editMessage, newDirectConversation, sendMessage, handleLikeToggle, newGroupConversation } from './chatActions';
 
-
 interface Message {
   message_id?: string;
   sender_id?: string;
@@ -22,30 +21,63 @@ interface Message {
 }
 
 function ChatTopBar({ conversationId, conversationData }: { conversationId: string | null, conversationData: Record<string, any> }) {
-  if (!conversationId || !conversationData[conversationId]) {
+  if (!conversationId || !conversationData[conversationId]) return null;
+
+  const conv = conversationData[conversationId];
+  let displayName = '';
+  let nickname = '';
+
+  // Check if it's a group conversation
+  if (conv.group_name || conv.full_name) {
+    // Group: show group name and participant usernames/nicknames
+    displayName = conv.group_name || conv.full_name;
+
+    // Try to get participants from the conversation data
+    const participants = conv.participants || [];
+    // Get contacts from localStorage for nickname lookup
+    let contacts: any[] = [];
+    try {
+      const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
+      if (contactsRaw) contacts = JSON.parse(contactsRaw);
+    } catch {}
+
+    const participantNames = participants.map((p: any) => {
+      // Try to find a nickname for this participant
+      const contact = contacts.find(c => c.user_id === p.user_id);
+      if (contact && contact.nickname && contact.nickname.trim() !== '') {
+        return contact.nickname;
+      }
+      return p.username || p.full_name || p.user_id;
+    });
+
     return (
-      <span className="text-xl font-bold">Select a conversation</span>
+      <div>
+        <span className="text-xl font-bold">{displayName}</span>
+        <div className="text-xs font-light opacity-70 mt-1">
+          {participantNames.join(', ')}
+        </div>
+      </div>
+    );
+  } else {
+    // Direct: show nickname or username
+    let contacts: any[] = [];
+    try {
+      const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
+      if (contactsRaw) contacts = JSON.parse(contactsRaw);
+    } catch {}
+
+    const match = contacts.find((c: any) => c.name === conv.username || c.full_name === conv.full_name);
+    if (match && match.nickname && match.nickname.trim() !== '') {
+      nickname = match.nickname;
+    }
+
+    return (
+      <div>
+        <span className="text-xl font-bold">{nickname || conv.username || conv.full_name}</span>
+        <span className="text-xs font-light opacity-70 block">{conv.username}</span>
+      </div>
     );
   }
-  // Prefer nickname from contacts if present
-  let displayName = conversationData[conversationId].username;
-  let nickname = '';
-  try {
-    const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
-    if (contactsRaw) {
-      const contacts = JSON.parse(contactsRaw);
-      const match = contacts.find((c: any) => c.name === conversationData[conversationId].username || c.full_name === conversationData[conversationId].full_name);
-      if (match && match.nickname && match.nickname.trim() !== '') {
-        nickname = match.nickname;
-      }
-    }
-  } catch {}
-  return (
-    <>
-      <span className="text-xl font-bold">{nickname || displayName}</span>
-      <span className="text-xs font-light opacity-70">{conversationData[conversationId].username}</span>
-    </>
-  );
 }
 
 function useConversationData() {
@@ -466,10 +498,26 @@ export function ChatList() {
           setConversations([]);
         } else {
           const data = await res.json();
-          console.log(data);
           if (Array.isArray(data)) {
-            setConversations(data);
-            localStorage.setItem('conversations', JSON.stringify(data));
+            // Merge conversations with the same conversation_id
+            const merged: Record<string, any> = {};
+            data.forEach(conv => {
+              const key = conv.conversation_id;
+              if (!merged[key]) {
+                merged[key] = { ...conv };
+              } else {
+                // Merge logic: prefer group full_name if present
+                if (conv.full_name && conv.full_name.trim() !== "") {
+                  merged[key].full_name = conv.full_name;
+                  merged[key].group_name = conv.full_name;
+                  merged[key].username = "";
+                }
+                // Optionally merge other fields as needed
+              }
+            });
+            setConversations(Object.values(merged));
+            console.log(merged);
+            localStorage.setItem('conversations', JSON.stringify(Object.values(merged)));
           } else {
             setConversations([]);
           }
@@ -595,16 +643,18 @@ export function ChatList() {
           <li className="text-error text-center py-4">{error}</li>
         ) : (
           conversations.map(({ full_name, last_message, timestamp, conversation_id, username }, idx) => {
-            // Prefer nickname from localStorage contacts if present
-            let displayName = username;
+            // Prefer group full_name if present, else nickname from contacts, else username
+            let displayName = full_name && full_name.trim() !== '' ? full_name : username;
             try {
-              const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
-              if (contactsRaw) {
-                const contacts = JSON.parse(contactsRaw);
-                // Try to match by name or full_name
-                const match = contacts.find((c: any) => c.name === username || c.full_name === full_name);
-                if (match) {
-                  displayName = match.nickname && match.nickname.trim() !== '' ? match.nickname : (match.full_name || match.name || full_name);
+              if (!full_name || full_name.trim() === '') {
+                const contactsRaw = typeof window !== 'undefined' ? localStorage.getItem('contacts') : null;
+                if (contactsRaw) {
+                  const contacts = JSON.parse(contactsRaw);
+                  // Try to match by name or full_name
+                  const match = contacts.find((c: any) => c.name === username || c.full_name === full_name);
+                  if (match) {
+                    displayName = match.nickname && match.nickname.trim() !== '' ? match.nickname : (match.full_name || match.name || full_name || username);
+                  }
                 }
               }
             } catch { }
