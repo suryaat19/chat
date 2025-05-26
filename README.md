@@ -49,15 +49,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY
         [x] Message input and display
         [x] Basic conversation threading
         [x] Read receipts along with timestamp
-    [ ] Real-time Communication
+    [x] Real-time Communication
         [x] Implement websocket connections
         [x] Message delivery status indicators
         [x] Typing indicators
-        [ ] Online/offline status
-    [ ] Advanced Chat Features
-        [ ] Group chat functionality
+        [x] Online/offline status
+    [x] Advanced Chat Features
+        [x] Group chat functionality
         [x] Direct messaging between users
-        [ ] Message reactions (likes, emoji responses)
+        [x] Message reactions (likes, emoji responses)
     [ ] Media Support
         [ ] Image sharing and previews
         [ ] File attachments
