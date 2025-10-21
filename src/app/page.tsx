@@ -1,258 +1,49 @@
-import Link from "next/link";
-import * as m from 'motion/react-client';
+import { Header } from './components/Header';
+import { Hero } from './components/Hero';
+import { Features } from './components/Features';
+import { Footer } from './components/Footer';
 
-export default function rand() {
+export default function Page() {
   return (
     <>
-    <div className="w-full min-h-screen dark:bg-gray-900 flex flex-col">
-        <div className="absolute inset-0 z-[-1] flex items-center justify-center overflow-hidden"
-            style={{ filter: 'blur(20px)' }}>
-            <m.div 
-                animate={{ scale: [4, 6, 8, 10, 12, 10, 8, 6, 4]}} 
-                transition={{ repeat: Infinity, duration: 15, ease: 'linear' }} >
-                    <svg className="size-15 shrink-0" viewBox="0 0 40 40"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stopColor="#5C5CFF" offset="0%"></stop><stop stopColor="#8A8AFF" offset="100%"></stop></linearGradient><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b"><stop stopColor="#5C5CFF" offset="0%"></stop><stop stopColor="#8A8AFF" offset="100%"></stop></linearGradient></defs><g fill="none" fillRule="evenodd"><path d="M28.872 22.096c.084.622.128 1.258.128 1.904 0 7.732-6.268 14-14 14-2.176 0-4.236-.496-6.073-1.382l-6.022 2.007c-1.564.521-3.051-.966-2.53-2.53l2.007-6.022A13.944 13.944 0 0 1 1 24c0-7.331 5.635-13.346 12.81-13.95A9.967 9.967 0 0 0 13 14c0 5.523 4.477 10 10 10a9.955 9.955 0 0 0 5.872-1.904z" fill="url(#a)" transform="translate(1 1)"></path><path d="M35.618 20.073l2.007 6.022c.521 1.564-.966 3.051-2.53 2.53l-6.022-2.007A13.944 13.944 0 0 1 23 28c-7.732 0-14-6.268-14-14S15.268 0 23 0s14 6.268 14 14c0 2.176-.496 4.236-1.382 6.073z" fill="url(#b)" transform="translate(1 1)"></path><path d="M18 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM24 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM30 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#FFF"></path></g></svg>
-            </m.div>
+      <div className="w-full min-h-screen dark:bg-gray-900 flex flex-col relative isolate overflow-hidden">
+        {/* --- Background Shapes Start --- */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
+          />
+        </div>
+        {/* --- Background Shapes End --- */}
+
+        <Header />
+        <main className="flex-grow">
+          <Hero />
+          <Features />
+        </main>
+        <Footer />
+
+        {/* --- Background Shapes Start (Bottom) --- */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75"
+          />
+        </div>
+        {/* --- Background Shapes End (Bottom) --- */}
       </div>
-        <div className="flex flex-row justify-between p-[2%] pt-5 h-[10%]">
-            <div className=" pl-4 md:pl-0 flex items-center gap-4">
-                <svg className="size-15 shrink-0" viewBox="0 0 40 40"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stopColor="#5C5CFF" offset="0%"></stop><stop stopColor="#8A8AFF" offset="100%"></stop></linearGradient><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b"><stop stopColor="#5C5CFF" offset="0%"></stop><stop stopColor="#8A8AFF" offset="100%"></stop></linearGradient></defs><g fill="none" fillRule="evenodd"><path d="M28.872 22.096c.084.622.128 1.258.128 1.904 0 7.732-6.268 14-14 14-2.176 0-4.236-.496-6.073-1.382l-6.022 2.007c-1.564.521-3.051-.966-2.53-2.53l2.007-6.022A13.944 13.944 0 0 1 1 24c0-7.331 5.635-13.346 12.81-13.95A9.967 9.967 0 0 0 13 14c0 5.523 4.477 10 10 10a9.955 9.955 0 0 0 5.872-1.904z" fill="url(#a)" transform="translate(1 1)"></path><path d="M35.618 20.073l2.007 6.022c.521 1.564-.966 3.051-2.53 2.53l-6.022-2.007A13.944 13.944 0 0 1 23 28c-7.732 0-14-6.268-14-14S15.268 0 23 0s14 6.268 14 14c0 2.176-.496 4.236-1.382 6.073z" fill="url(#b)" transform="translate(1 1)"></path><path d="M18 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM24 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM30 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#FFF"></path></g></svg>
-                <div className="md:hidden flex-grow"></div>
-                <p className="text-4xl font-bold font-dm-sans dark:text-white">Dummy Chat</p>
-            </div>
-            <div className="hidden md:block">
-                <Link href="/authentication" className="tooltip tooltip-bottom" data-tip="Login or Register">
-                    <button className="btn btn-secondary focus:ring-2 bg-[#8A8AFF] transition-all delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 focus:ring-offset-2 focus:ring-[#8A8AFF] active:bg-[#5C5CFF]">Get Started</button>
-                </Link>
-            </div>
-        </div>
-        <div className="h-[90%] px-[2%] flex flex-col md:flex-row gap-10 top-[10%] items-center">
-            <div className="flex-grow md:text-8xl text-5xl font-light font-dm-sans md:pt-2 pt-4">
-                <p className="dark:text-white">Join.<br className="hidden md:block"/> Connect.<br/>Communicate.</p>
-            </div>
-            <div className="flex flex-col w-[350px]">
-                <div className="px-4 py-6 shadow-sm rounded-lg border border-gray-200 dark:border-gray-800">
-			    <ul role="list" className="mx-auto max-w-md dark:bg-gray-950/10">
-				<li className="group/item relative flex items-center justify-between rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-white/5">
-					<div className="flex gap-4">
-						<div className="flex-shrink-0">
-							<img className="h-12 w-12 rounded-full" alt="" src="charles.jpeg"/>
-						</div>
-						<div className="w-full text-sm leading-6">
-							<a className="font-semibold text-gray-900 dark:text-white"href="#">Charles Leclerc</a>
-							<div className="text-gray-500">+377*****5787</div>
-						</div>
-					</div>
-					<a className="group/edit invisible relative flex items-center rounded-full py-1 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 transition group-hover/item:visible hover:bg-gray-200 dark:text-gray-400"href="#">
-						<span className="font-semibold transition group-hover/edit:text-gray-700">Chat</span>
-						<svg className="mt-px h-5 w-5 text-gray-400 transition group-hover/edit:translate-x-0.5 group-hover/edit:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-							<path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"clipRule="evenodd"></path>
-						</svg>
-					</a>
-				</li>
-
-                <li className="group/item relative flex items-center justify-between rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-white/5">
-					<div className="flex gap-4">
-						<div className="flex-shrink-0">
-							<img className="h-12 w-12 rounded-full" alt="" src="hailey.jpeg"/>
-						</div>
-						<div className="w-full text-sm leading-6">
-							<a className="font-semibold text-gray-900 dark:text-white"href="#">Hailey Bieber</a>
-							<div className="text-gray-500">+1*****3742</div>
-						</div>
-					</div>
-					<a className="group/edit relative flex items-center rounded-full py-1 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 transition group-hover/item:visible hover:bg-gray-200 dark:text-gray-400"href="#">
-						<span className="font-semibold transition group-hover/edit:text-gray-700">Chat</span>
-						<svg className="mt-px h-5 w-5 text-gray-400 transition group-hover/edit:translate-x-0.5 group-hover/edit:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-							<path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"clipRule="evenodd"></path>
-						</svg>
-					</a>
-				</li>
-                <li className="group/item relative flex items-center justify-between rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-white/5">
-					<div className="flex gap-4">
-						<div className="flex-shrink-0">
-							<img className="h-12 w-12 rounded-full" alt="" src="jannik.jpg"/>
-						</div>
-						<div className="w-full text-sm leading-6">
-							<a className="font-semibold text-gray-900 dark:text-white"href="#">Jannik Sinner</a>
-							<div className="text-gray-500">+39*****6723</div>
-						</div>
-					</div>
-					<a className="group/edit invisible relative flex items-center rounded-full py-1 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 transition group-hover/item:visible hover:bg-gray-200 dark:text-gray-400"href="#">
-						<span className="font-semibold transition group-hover/edit:text-gray-700">Chat</span>
-						<svg className="mt-px h-5 w-5 text-gray-400 transition group-hover/edit:translate-x-0.5 group-hover/edit:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-							<path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"clipRule="evenodd"></path>
-						</svg>
-					</a>
-				</li>
-                <li className="group/item relative flex items-center justify-between rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-white/5">
-					<div className="flex gap-4">
-						<div className="flex-shrink-0">
-							<img className="h-12 w-12 rounded-full" alt="" src="Sabrina.pjpeg"/>
-						</div>
-						<div className="w-full text-sm leading-6">
-							<a className="font-semibold text-gray-900 dark:text-white"href="#">Sabrina Carpenter</a>
-							<div className="text-gray-500">+1*****6973</div>
-						</div>
-					</div>
-					<a className="group/edit invisible relative flex items-center rounded-full py-1 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 transition group-hover/item:visible hover:bg-gray-200 dark:text-gray-400"href="#">
-						<span className="font-semibold transition group-hover/edit:text-gray-700">Chat</span>
-						<svg className="mt-px h-5 w-5 text-gray-400 transition group-hover/edit:translate-x-0.5 group-hover/edit:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-							<path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"clipRule="evenodd"></path>
-						</svg>
-					</a>
-				</li>
-			</ul>
-		    </div>
-            </div>
-            <div className="flex flex-col w-[350px] rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm p-2">
-                <div className="navbar bg-base-100 dark:bg-gray-900">
-                    <div className="flex gap-4 w-full px-4 dark:bg-gray-900">
-                        <div className="dropdown dropdown-start flex-shrink-0">
-                            <div className=" avatar avatar-online">
-                                <div className="w-12 bg-red-400 rounded-full"><img alt="" src="hailey.jpeg" /></div>
-                            </div>
-                        </div>
-                        <div className="w-full text-sm leading-6">
-							<a className="font-semibold text-gray-900 dark:text-white"href="#">Hailey Bieber</a>
-							<div className="text-gray-500">+91*****3742</div>
-					    </div>
-                        <label className="label">
-                            <svg className="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" strokeWidth="0.5" viewBox="0 0 24 24">
-                                <path d="M6.97825 3.99999c-.3729 0-.74128.08169-1.07926.23933-.32394.1511-.61243.36846-.84696.63787-1.81892 1.82189-2.35302 3.87423-1.89899 5.93671.43916 1.9949 1.77747 3.8929 3.45642 5.572 1.67897 1.6791 3.57614 3.0176 5.57034 3.4591 2.0612.4563 4.1141-.0726 5.9396-1.8853.2705-.2348.4888-.524.6405-.8489.1581-.3387.2401-.7081.2401-1.0819 0-.3739-.082-.7432-.2401-1.0819-.1516-.3247-.3696-.6137-.6398-.8483l-1.2098-1.2106c-.5043-.5041-1.1879-.7872-1.9007-.7872-.7128 0-1.3968.2835-1.9011.7876l-.6178.6181c-.1512.1513-.3563.2363-.5701.2363-.2138 0-.4189-.085-.5701-.2363l-1.85336-1.8545c-.15117-.1513-.23609-.3565-.23609-.5704 0-.214.08493-.4192.23613-.5705l.61812-.61851c.5037-.50461.7867-1.18868.7867-1.90191s-.2833-1.39767-.7871-1.90228L8.90499 4.8778c-.23462-.26969-.5233-.48727-.84749-.63848-.33798-.15764-.70636-.23933-1.07925-.23933Z"/>
-                            </svg>
-
-                        </label>
-                        <label className="label">
-                            <svg className="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path fillRule="evenodd" d="M14 7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7Zm2 9.387 4.684 1.562A1 1 0 0 0 22 17V7a1 1 0 0 0-1.316-.949L16 7.613v8.774Z" clipRule="evenodd"/>
-                            </svg>
-                        </label>
-                    </div>
-                </div>
-                <div className="flex-grow">
-                    <div className="chat chat-start">
-                        <div className="chat-image avatar">
-                            <div className="w-10 rounded-full">
-                                <img alt="Tailwind CSS chat bubble component" src="hailey.jpeg"/>
-                            </div>
-                        </div>
-                        <div className="chat-bubble">Hey, do you wanna hangout this evening?</div>  
-                    </div>
-                    <div className="bg-blue-50 rounded-b-lg w-6 ml-12 dark:bg-gray-900 justify-between">
-                            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path fillRule="evenodd" d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z" clipRule="evenodd"/>
-                            </svg>
-                        </div>
-                    <div className="chat chat-start">
-                        <div className="chat-image avatar">
-                            <div className="w-10 rounded-full">
-                                <img alt="Tailwind CSS chat bubble component" src="hailey.jpeg"/>
-                            </div>
-                        </div>
-                        <div className="chat-bubble">Let's meet tonight at the club, park 5 avenue for some drinks.</div>
-                    </div>
-                    <div className="bg-blue-50 flex rounded-b-lg w-36 ml-12 dark:bg-gray-900 justify-between">
-                        
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 11c.889-.086 1.416-.543 2.156-1.057a22.323 22.323 0 0 0 3.958-5.084 1.6 1.6 0 0 1 .582-.628 1.549 1.549 0 0 1 1.466-.087c.205.095.388.233.537.406a1.64 1.64 0 0 1 .384 1.279l-1.388 4.114M7 11H4v6.5A1.5 1.5 0 0 0 5.5 19v0A1.5 1.5 0 0 0 7 17.5V11Zm6.5-1h4.915c.286 0 .372.014.626.15.254.135.472.332.637.572a1.874 1.874 0 0 1 .215 1.673l-2.098 6.4C17.538 19.52 17.368 20 16.12 20c-2.303 0-4.79-.943-6.67-1.475"/>
-                        </svg>
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 13c-.889.086-1.416.543-2.156 1.057a22.322 22.322 0 0 0-3.958 5.084 1.6 1.6 0 0 1-.582.628 1.549 1.549 0 0 1-1.466.087 1.587 1.587 0 0 1-.537-.406 1.666 1.666 0 0 1-.384-1.279l1.389-4.114M17 13h3V6.5A1.5 1.5 0 0 0 18.5 5v0A1.5 1.5 0 0 0 17 6.5V13Zm-6.5 1H5.585c-.286 0-.372-.014-.626-.15a1.797 1.797 0 0 1-.637-.572 1.873 1.873 0 0 1-.215-1.673l2.098-6.4C6.462 4.48 6.632 4 7.88 4c2.302 0 4.79.943 6.67 1.475"/>
-                        </svg>
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.99 9H15M8.99 9H9m12 3a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM7 13c0 1 .507 2.397 1.494 3.216a5.5 5.5 0 0 0 7.022 0C16.503 15.397 17 14 17 13c0 0-1.99 1-4.995 1S7 13 7 13Z"/>
-                        </svg>
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 13c0 2.038-2.239 4.5-5 4.5S7 15.038 7 13c0 1.444 10 1.444 10 0Z"/>
-                            <path fill="currentColor" d="m9 6.811.618 1.253 1.382.2-1 .975.236 1.377L9 9.966l-1.236.65L8 9.239l-1-.975 1.382-.2L9 6.811Zm6 0 .618 1.253 1.382.2-1 .975.236 1.377L15 9.966l-1.236.65L14 9.239l-1-.975 1.382-.2L15 6.811Z"/>
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m9 6.811.618 1.253 1.382.2-1 .975.236 1.377L9 9.966l-1.236.65L8 9.239l-1-.975 1.382-.2L9 6.811Zm6 0 .618 1.253 1.382.2-1 .975.236 1.377L15 9.966l-1.236.65L14 9.239l-1-.975 1.382-.2L15 6.811Z"/>
-                        </svg>
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M12 17a2 2 0 0 1 2 2h-4a2 2 0 0 1 2-2Z"/>
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.815 9H16.5a2 2 0 1 0-1.03-3.707A1.87 1.87 0 0 0 15.5 5 1.992 1.992 0 0 0 12 3.69 1.992 1.992 0 0 0 8.5 5c.002.098.012.196.03.293A2 2 0 1 0 7.5 9h3.388m2.927-.985v3.604M10.228 9v2.574M15 16h.01M9 16h.01m11.962-4.426a1.805 1.805 0 0 1-1.74 1.326 1.893 1.893 0 0 1-1.811-1.326 1.9 1.9 0 0 1-3.621 0 1.8 1.8 0 0 1-1.749 1.326 1.98 1.98 0 0 1-1.87-1.326A1.763 1.763 0 0 1 8.46 12.9a2.035 2.035 0 0 1-1.905-1.326A1.9 1.9 0 0 1 4.74 12.9 1.805 1.805 0 0 1 3 11.574V12a9 9 0 0 0 18 0l-.028-.426Z"/>
-                        </svg>
-                    </div>
-                </div>
-                <div className="flex items-center justify-between w-full px-4 navbar">
-                    <span className="label">
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M7.5 4.586A2 2 0 0 1 8.914 4h6.172a2 2 0 0 1 1.414.586L17.914 6H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1.086L7.5 4.586ZM10 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0Zm2-4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" clipRule="evenodd"/>
-                        </svg>
-                    </span>
-                    <input type="text" placeholder="Message..." />
-
-                     <span className="label">
-                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M5 8a1 1 0 0 1 1 1v3a4.006 4.006 0 0 0 4 4h4a4.006 4.006 0 0 0 4-4V9a1 1 0 1 1 2 0v3.001A6.006 6.006 0 0 1 14.001 18H13v2h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2H9.999A6.006 6.006 0 0 1 4 12.001V9a1 1 0 0 1 1-1Z" clipRule="evenodd"/>
-                            <path d="M7 6a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4V6Z"/>
-                        </svg>
-                     </span>      
-
-                </div>
-            </div>
-        </div>
-        <div className="flex md:flex-row flex-col p-[2%] md:gap-[2%] gap-5 top-[100%] px-4 py-4">
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg ring md:shadow-xl shadow-sm px-6 py-4 ring-gray-900/5
-                            transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
-                <h3 className="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">User Authentication</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm ">Verifies a person's identity, ensuring that only authorized 
-                    users can access systems or data using credentials like passwords, biometrics, or tokens.</p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg ring md:shadow-xl shadow-sm px-6 py-4 ring-gray-900/5
-                            transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
-                <h3 className="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">Real time Messaging</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm ">Enables instant sending and receiving of messages with minimal delay for seamless communication.</p>
-            </div> 
-            <div className="bg-white dark:bg-gray-800 rounded-lg ring md:shadow-xl shadow-sm px-6 py-4 ring-gray-900/5
-                            transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
-                <h3 className="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">Group and Direct Chats</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm ">Supports conversations between multiple users in groups or one-on-one private messaging.</p>
-            </div> 
-            <div className="bg-white dark:bg-gray-800 rounded-lg ring md:shadow-xl shadow-sm px-6 py-4 ring-gray-900/5
-                            transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
-                <h3 className="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">Rich Media Sharing</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm ">Allows users to share images, videos, documents, and other multimedia within chat dialogs.</p>
-            </div> 
-            <div className="bg-white dark:bg-gray-800 rounded-lg ring md:shadow-xl shadow-sm px-6 py-4 ring-gray-900/5
-                            transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
-                <h3 className="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">Clean Responsive Interface</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm ">Adapts seamlessly across all device sizes by using flexible layouts, scalable images, and intuitive navigation to provide a consistent, user-friendly experience without clutter.</p>
-            </div>             
-        </div>
-
-    </div>
-    <footer className="footer sm:footer-horizontal dark:bg-gray-800 text-base-content p-10">
-      <aside>
-        <div className="flex items-center justify-between gap-15">
-            <svg className="size-25 shrink-0" viewBox="0 0 40 40"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stopColor="#5C5CFF" offset="0%"></stop><stop stopColor="#8A8AFF" offset="100%"></stop></linearGradient><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b"><stop stopColor="#5C5CFF" offset="0%"></stop><stop stopColor="#8A8AFF" offset="100%"></stop></linearGradient></defs><g fill="none" fillRule="evenodd"><path d="M28.872 22.096c.084.622.128 1.258.128 1.904 0 7.732-6.268 14-14 14-2.176 0-4.236-.496-6.073-1.382l-6.022 2.007c-1.564.521-3.051-.966-2.53-2.53l2.007-6.022A13.944 13.944 0 0 1 1 24c0-7.331 5.635-13.346 12.81-13.95A9.967 9.967 0 0 0 13 14c0 5.523 4.477 10 10 10a9.955 9.955 0 0 0 5.872-1.904z" fill="url(#a)" transform="translate(1 1)"></path><path d="M35.618 20.073l2.007 6.022c.521 1.564-.966 3.051-2.53 2.53l-6.022-2.007A13.944 13.944 0 0 1 23 28c-7.732 0-14-6.268-14-14S15.268 0 23 0s14 6.268 14 14c0 2.176-.496 4.236-1.382 6.073z" fill="url(#b)" transform="translate(1 1)"></path><path d="M18 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM24 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM30 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#FFF"></path></g></svg>
-            <div className="md:hidden block">
-                <Link href="/authentication" className="tooltip tooltip-bottom" data-tip="Login or Register">
-                    <button className="btn btn-secondary focus:ring-2 bg-[#8A8AFF] transition-all delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 focus:ring-offset-2 focus:ring-[#8A8AFF] active:bg-[#5C5CFF]">Get Started</button>
-                </Link>
-            </div>
-        </div>
-        <p className="text-gray-900 dark:text-white text-base font-medium">
-          Dummy Chat Ltd.<br/>
-          Providing reliable connections since 2025
-        </p>
-      </aside>
-      <nav>
-        <h6 className="text-gray-900 dark:text-white text-base font-medium">Services</h6>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">Real time Messaging</p>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">Group and Direct Chats</p>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">Rich Media Sharing</p>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">Clean Responsive Interface</p>
-      </nav>
-      <nav>
-        <h6 className="text-gray-900 dark:text-white text-base font-medium">Contributors</h6>
-        <a className="link link-hover text-gray-500 dark:text-gray-400 text-sm" href="https://www.linkedin.com/in/akanksha-gupta-a9241028b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Akanksha Gupta</a>
-        <a className="link link-hover text-gray-500 dark:text-gray-400 text-sm" href="https://www.linkedin.com/in/sameer-patel-ba715928b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Sameer Patel</a>
-        <a className="link link-hover text-gray-500 dark:text-gray-400 text-sm">Shreeja Chaudhary</a>
-        <a className="link link-hover text-gray-500 dark:text-gray-400 text-sm" href="https://www.linkedin.com/in/surya-thota21">Surya Thota</a>
-      </nav>
-    </footer>
-  </>
+    </>
   );
 }
